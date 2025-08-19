@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+{% block title %}
+{% trans "Course Units" %}
+{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/main_schoolia.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+<section class="content-section">
+    {% for unit in units %}
+    <div class="container">
+        <div class="paragraph-card">
+            <h2>{{ unit.name }}</h2>
+            <p>
+                {{ unit }}
+            </p>
+            <br>
+            <p>
+                {{ unit.description }}
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

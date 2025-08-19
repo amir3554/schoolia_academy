@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/main_schoolia.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="container my-5">
+    <section>
+        <div class="col-md-12 mb-5">
+            <p class="h1 text-center text-secondary">
+                {% trans "Schoolia academy" %}
+            </p>
+            <div class="d-flex justify-content-center">
+
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+{% for lesson in lessons %}
+<div class="container">
+    <div class="paragraph-card lesson-card"
+        data-unit-id="{{ unit.id }}"
+        data-course-id="{{ course.id }}"
+        data-lesson-id="{{ lesson.id }}">
+        <h2>{{ lesson.name }}</h2>
+        <p>
+            {{ lesson }}
+        </p>
+        <br>
+        <p>
+            {{ lesson.description }}
+        </p>
+    </div>
+</div>
+
+{% empty %}
+
+<h2 class="text-muted">{% trans "There is no courses for now" %}</h2>
+
+{% endfor %}
+
+
+
+{% endblock content %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.lesson-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const lessonId = card.dataset.lessonId;
+      const unitId = card.dataset.unitId;
+      const courseId = card.dataset.courseId;
+      window.location.assign(`/schoolia/course/${courseId}/lesson/${lessonId}/`);
+    });
+  });
+});
+</script>
+
+{% endblock extra_js %}

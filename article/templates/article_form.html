@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+{% if article %}{% trans "Edit Article" %}{% else %}{% trans "Write Article" %}{% endif %}
+{% endblock title %}
+
+{% block extra_css %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+  <main class="container py-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="h4 mb-3">
+          {% if article %}<i class="bi bi-pencil-square ms-1"></i> {% trans "Edit Article" %}
+          {% else %}<i class="bi bi-journal-plus ms-1"></i> {% trans "Write Article" %}{% endif %}
+        </h1>
+
+        <form method="post" enctype="multipart/form-data"
+              action="{% if article %}{% url 'ArticleUpdate' article.id %}{% else %}{% url 'ArticleCreate' %}{% endif %}">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="text" name="title" id="title" class="form-control" placeholder="العنوان"
+                       value="{{ article.title|default_if_none:'' }}" required>
+                <label for="title">{% trans "Title" %}</label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea name="content" id="content" class="form-control" style="height:220px"
+                          placeholder="{% trans 'Content' %}" required>{{ article.content|default_if_none:'' }}</textarea>
+                <label for="content">{% trans "Content" %}</label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">{% trans "Image" %}</label>
+              <input type="file" name="image" class="form-control" accept="image/*">
+              {% if article.image %}
+                <div class="mt-2">
+                  <img src="{{ article.image.url }}" class="img-fluid rounded" style="max-height:200px" alt="preview">
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2">
+              <a href="{% if article %}{% url 'Article' article.id %}{% else %}{% url 'Index' %}{% endif %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+              <button type="submit" class="btn btn-primary">
+                {% if article %}<i class="bi bi-save ms-1"></i> {% trans "Save Settings" %}{% else %}<i class="bi bi-check2-circle ms-1"></i> {% trans "Post Article" %}{% endif %}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock extra_js %}
+
+
+{% endblock content %}

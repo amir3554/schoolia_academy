@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+{{ article.title }}
+{% endblock title %}
+
+{% block extra_css %}
+ 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .avatar{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:#e9ecef}
+    .comment-card{border:1px solid #eee;border-radius:1rem}
+    .reply-thread{border-right:3px solid #f1f3f5;margin-right:1.25rem;padding-right:1rem}
+  </style>
+
+{% endblock %}
+
+{% block content %}
+<header class="py-4 bg-white border-bottom">
+  <div class="container">
+    <h1 class="h3 mb-1">{{ article.title }}</h1>
+    <p class="text-muted mb-0">
+      <i class="bi bi-person ms-1"></i> {{ article.student|default:article.student.username }}
+      <span class="mx-2">•</span>
+      <i class="bi bi-calendar-event ms-1"></i> {{ article.created_at|date:"Y-m-d" }}
+    </p>
+  </div>
+</header>
+
+<main class="container my-4">
+
+  <!-- بطاقة المقال -->
+  <div class="card shadow-sm mb-4">
+    {% if article.image %}
+      <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
+    {% endif %}
+    <div class="card-body">
+      <div class="d-flex justify-content-end gap-2">
+        {% if request.user.is_authenticated and article.student.id == request.user.id %}
+          <a class="btn btn-outline-secondary btn-sm" href="{% url 'ArticleUpdate' article.id %}">
+            <i class="bi bi-pencil-square"></i> {% trans "Edit" %}
+          </a>
+        {% endif %}
+      </div>
+      {% if article.content %}
+        <div class="mt-2">{{ article.content|linebreaks }}</div>
+      {% else %}
+        <div class="alert alert-warning mb-0">{% trans "No Content Yet" %}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- إضافة تعليق جديد على المقال -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h2 class="h5 mb-3"><i class="bi bi-chat-dots ms-1"></i>{% trans "Add Comment" %}</h2>
+      <form method="post" action="{% url 'CommentAddArticle' article.id %}">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="form-floating">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              <textarea name="content" class="form-control" id="contentInput" style="height:120px" placeholder="Add Comment..." required></textarea>
+              <label for="contentInput">{% trans "content" %}</label>
+            </div>
+          </div>
+
+          <!-- إن كنت تستخدم GenericForeignKey -->
+          <input type="hidden" name="receiver_type" value="article">
+          <input type="hidden" name="receiver_id" value="{{ article.id }}">
+
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+              {% trans "Respecting the etiquette of dialogue helps everyone" %}
+            </small>
+            <button class="btn btn-primary px-4" type="submit">
+              <i class="bi bi-send ms-1"></i> {% trans "Post" %}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- التعليقات -->
+  <section id="comments" class="mb-5">
+    <div class="d-flex align-items-center mb-3">
+      <h2 class="h5 mb-0"><i class="bi bi-chat-left-text ms-1"></i> {% trans "comments" %}</h2>
+      <span class="badge bg-secondary rounded-pill me-2">{{ comments.count }}</span>
+    </div>
+
+    {% if comments %}
+      <div class="vstack gap-3">
+        {% for c in comments %}
+          <article class="comment-card p-3 bg-white">
+            <div class="d-flex align-items-start">
+              <div class="avatar ms-2">
+                {{ c.sender }}
+              </div>
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between flex-wrap">
+                  <div>
+                    <strong>{{ c.sender }}</strong>
+                    <span class="text-muted small ms-2">{{ c.created_at|timesince }} {% trans "ago" %}</span>
+                  </div>
+                  <a class="link-secondary small" data-bs-toggle="collapse" href="#reply-{{ c.id }}">
+                    <i class="bi bi-reply"></i> {% trans "reply" %}
+                  </a>
+                </div>
+                {% if c.title %}<div class="mt-1 fw-semibold">{{ c.title }}</div>{% endif %}
+                <p class="mb-2 mt-1">{{ c.content|linebreaksbr }}</p>
+
+                <!-- نموذج رد -->
+                <div class="collapse" id="reply-{{ c.id }}">
+                  <form class="mt-2" method="post" action="{% url 'CommentAddCommentArticle' article.id c.id %}">
+                    {% csrf_token %}
+                    <div class="row g-2">
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <textarea name="content" class="form-control" id="replyContent-{{ c.id }}" placeholder="{% trans "Write Your reply...." %}" style="height:100px" required></textarea>
+                          <label for="replyContent-{{ c.id }}"> {% trans "write reply" %}</label>
+                        </div>
+                        {% comment %} 
+                        |default:c.sender.username|first|upper 
+                        |default:r.sender.username|first|upper
+                        |default:r.sender.username|first|upper
+                        |default:r.sender.username|first|upper
+                        {% endcomment %}
+                      </div>
+                      <input type="hidden" name="receiver_type" value="comment">
+                      <input type="hidden" name="receiver_id" value="{{ c.id }}">
+                      <div class="col-12 text-end">
+                        <button class="btn btn-outline-primary btn-sm" type="submit">
+                          <i class="bi bi-send"></i> {% trans "Post" %}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- الردود -->
+                {% if c.children.all %}
+                  <div class="mt-3 reply-thread">
+                    <div class="vstack gap-3">
+                      {% for r in c.children.all %}
+                        <div class="d-flex">
+                          <div class="avatar ms-2">
+                            {{ r.sender }}
+                          </div>
+                          <div>
+                            <div>
+                              <strong>{{ r.sender }}</strong>
+                              <span class="text-muted small ms-2">{{ r.created_at|timesince }} {% trans "ago" %}</span>
+                            </div>
+                            {% if r.title %}<div class="mt-1 fw-semibold">{{ r.title }}</div>{% endif %}
+                            <p class="mb-0 mt-1">{{ r.content|linebreaksbr }}</p>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">{% trans "No Comments Yet" %}</div>
+    {% endif %}
+  </section>
+</main>
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock extra_js %}
+
+{% endblock content %}

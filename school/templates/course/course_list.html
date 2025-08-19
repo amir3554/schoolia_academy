@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/main_schoolia.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+<div class="container my-5">
+    <section>
+        <div class="col-md-12 mb-5">
+            <p class="h1 text-center text-secondary">
+                {% trans "Schoolia academy" %}
+            </p>
+            <div class="d-flex justify-content-center">
+
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+{% for course in courses %}
+<div class="container">
+    <div class="paragraph-card course-card" data-course-id="{{ course.id }}">
+        <h2>{{ course.name }}</h2>
+        <p>
+            {{ course }}
+        </p>
+        <br>
+        <p>
+            {{ course.description }}
+        </p>
+    </div>
+</div>
+
+{% endfor %} 
+
+{% block extra_js %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.course-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const courseId = card.dataset.courseId;
+      window.location.assign(`/schoolia/course/${courseId}/`);
+    });
+  });
+});
+</script>
+
+{% endblock extra_js %}
+
+{% endblock content %}

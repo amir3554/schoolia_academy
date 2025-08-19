@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/main_schoolia.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+
+
+<div class="container my-5">
+    <section>
+        <div class="col-md-12 mb-5">
+            <p class="h1 text-center text-secondary">
+                {% trans "Choose the course you want to buy!" %}
+            </p>
+            <div class="d-flex justify-content-center">
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<p class="text text-small">{{ error_message }}</p>
+
+{% for course in courses %}
+
+<div class="container">
+    <div class="paragraph-card">
+        <h2>{{ course.name }}</h2>
+        <p>
+            {{ course }}
+        </p>
+        <br>
+        <a class="btn btn-danger"href="{% url 'CheckOut' course.id %}">
+            {% trans "Buy now" %}
+        </a>
+        <br>
+        <p>
+            {{ course.description }}
+        </p>
+    </div>
+</div>
+
+{% endfor %} 
+
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load currency %}
+
+{% block title %}Get Your Course!{% endblock title %}
+
+{% block extra_css %}
+
+<style>
+
+main{
+    background-color:rgba(123, 33, 93, 1);
+}
+
+</style>
+
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row bd-highlight">
+        <div class="col-md-12">
+            <h4 class="my-3 text-center">
+                <div id="course-id"
+                    class="alert py-3"
+                    style="background-color: rgb(150, 50, 110);"
+                    data-course-id="{{ course.id }}"
+                >
+                    <h3 class="text-center text-white">{% trans 'Price' %}</h3>
+                    <h3 class="text-center text-white">{{ course.price|currency }}</h3>
+                    <h3 class="text-center text-white">{% trans 'Details' %}</h3>
+                    <p class=" text-center text-white small">
+                        {{ course }}
+                        <br>
+                        <br>
+                        {{ course.description }}
+                        <br>
+                        <br>
+                    </p>
+                </div>
+            </h4>
+        </div>
+        <div class="col-12">
+            <h4 class="my-3 ">{% trans "Your Info" %}</h4>
+            <div class="card" style="background-color: rgb(150, 50, 110);">
+                <div class="card-body">
+                    {{ user.username }}
+                    <br>
+                    {{ user.first_name }}
+                    <br>
+                    {{ user.last_name }}
+                    <br>
+                    {{ user.email }}
+                </div>
+            </div>
+            <h4 class="my-3">{% trans "Payment method" %}</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" role="button" onclick="createStripeSession()">
+                        <div class="card-body text-center">
+                            <p>{% trans "credit card" %}</p>
+                            <i class="lni lni-credit-cards fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div id="payment-form-container">
+                        <div id="stripe-card" class="card my-3 p-3" style="display: none">
+                            <form id="payment-form">
+                                <div id="payment-element">
+                                </div>
+                                <button id="stripe-submit" class="btn mt-3"
+                                    style="color: #000;background-color:rgb(150, 50, 110);">
+                                    {% trans 'Pay Now' %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="text-center"><a class=" text-white small" href="{% url 'CheckOutComplete' %}">C</a><p>
+{% block extra_js %}
+
+<script defer src="{% static 'js/main.js' %}"></script>
+<script defer src="{% static 'js/stripe.js' %}"></script>
+
+{% endblock extra_js %}
+
+{% endblock content %}

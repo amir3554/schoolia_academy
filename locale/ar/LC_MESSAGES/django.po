@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-19 09:17+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\article\templates\article.html:45
+msgid "Edit"
+msgstr "تعديل"
+
+#: .\article\templates\article.html:52
+msgid "No Content Yet"
+msgstr "لا محتوى بعد"
+
+#: .\article\templates\article.html:60
+msgid "Add Comment"
+msgstr "إضافة تعليق"
+
+#: .\article\templates\article.html:71 .\school\forms.py:18
+msgid "content"
+msgstr "المحتوى"
+
+#: .\article\templates\article.html:81
+msgid "Respecting the etiquette of dialogue helps everyone"
+msgstr "إن احترام آداب الحوار يساعد الجميع"
+
+#: .\article\templates\article.html:84 .\article\templates\article.html:135
+#: .\school\templates\course\lesson.html:107
+msgid "Post"
+msgstr "نشر"
+
+#: .\article\templates\article.html:95
+#: .\school\templates\course\lesson.html:118
+msgid "comments"
+msgstr "التعليقات"
+
+#: .\article\templates\article.html:111 .\article\templates\article.html:154
+#: .\school\templates\course\lesson.html:134
+#: .\school\templates\course\lesson.html:179
+msgid "ago"
+msgstr "منذ"
+
+#: .\article\templates\article.html:114
+#: .\school\templates\course\lesson.html:138
+msgid "reply"
+msgstr "رد"
+
+#: .\article\templates\article.html:128
+msgid "write reply"
+msgstr "اكتب ردا"
+
+#: .\article\templates\article.html:170
+msgid "No Comments Yet"
+msgstr "لا تعليقات بعد"
+
+#: .\article\templates\article_form.html:7
+#: .\article\templates\article_form.html:23
+msgid "Edit Article"
+msgstr "عدل المقال"
+
+#: .\article\templates\article_form.html:7
+#: .\article\templates\article_form.html:24
+msgid "Write Article"
+msgstr "اكتب مقالا"
+
+#: .\article\templates\article_form.html:35
+msgid "Title"
+msgstr "عنوان"
+
+#: .\article\templates\article_form.html:42
+#: .\article\templates\article_form.html:43
+msgid "Content"
+msgstr "محتوى"
+
+#: .\article\templates\article_form.html:48
+msgid "Image"
+msgstr "صورة"
+
+#: .\article\templates\article_form.html:58
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\article\templates\article_form.html:60
+msgid "Save Settings"
+msgstr "حفظ الإعدادات"
+
+#: .\article\templates\article_form.html:60
+msgid "Post Article"
+msgstr "نشر المقال"
+
+#: .\article\templates\article_list.html:20
+msgid "Articles Schoolia"
+msgstr "مقالات سكوليا"
+
+#: .\authentication\templates\profile_edit.html:17
+msgid "Edit Profile"
+msgstr "عدم الملف الشخصي"
+
+#: .\authentication\templates\profile_edit.html:43
+msgid "Save"
+msgstr "حفظ"
+
+#: .\authentication\templates\registration\login.html:26
+msgid "Main Page"
+msgstr "الصفحة الرئيسية"
+
+#: .\authentication\templates\registration\login.html:34
+msgid "Log In"
+msgstr "تسجيل الدخول"
+
+#: .\authentication\templates\registration\login.html:42
+msgid "Log in"
+msgstr "تسجيل الخروج"
+
+#: .\authentication\templates\registration\login.html:46
+msgid "Make an account."
+msgstr "حساب جديد"
+
+#: .\authentication\templates\registration\login.html:49
+msgid "Back to home page."
+msgstr "عودة الى الرئيسي"
+
+#: .\authentication\templates\registration\register.html:6
+msgid "Register Page"
+msgstr "صفحة التسجيل"
+
+#: .\authentication\templates\registration\register.html:21
+msgid "Create Account"
+msgstr "عمل حساب"
+
+#: .\authentication\templates\registration\register.html:34
+#: .\school\templates\partials\header.html:73
+msgid "Register"
+msgstr "تسجيل"
+
+#: .\authentication\templates\registration\register.html:38
+msgid " Already have an account? "
+msgstr "هل لديك حساب بالفعل؟"
+
+#: .\authentication\templates\registration\register.html:39
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: .\operation\templates\check_out.html:30
+msgid "Price"
+msgstr "السعر"
+
+#: .\operation\templates\check_out.html:32
+msgid "Details"
+msgstr "تفاصيل"
+
+#: .\operation\templates\check_out.html:45
+msgid "Your Info"
+msgstr "معلوماتك"
+
+#: .\operation\templates\check_out.html:57
+msgid "Payment method"
+msgstr "طرق الدفع"
+
+#: .\operation\templates\check_out.html:62
+msgid "credit card"
+msgstr "البطاقة الإئتامانية"
+
+#: .\operation\templates\check_out.html:75
+msgid "Pay Now"
+msgstr "دفع الآن"
+
+#: .\operation\templates\check_out_complete.html:20
+msgid "Your transaction has been Confirmed."
+msgstr "لقد تم تأكيد معاملتك"
+
+#: .\operation\templates\check_out_complete.html:30
+#, fuzzy
+#| msgid "The transaction has been successful You may enter the course now!"
+msgid "The transaction has been successful, You may enter the course now!"
+msgstr "!تمت العملية بنجاح. يمكنك الآن الانضمام إلى الدورة"
+
+#: .\operation\templates\check_out_complete.html:35
+msgid "Back To Main Page."
+msgstr "العودة إلى الصفحة الرئيسية"
+
+#: .\school\forms.py:17
+msgid "title"
+msgstr "عنوان"
+
+#: .\school\forms.py:19
+msgid "image"
+msgstr "صورة"
+
+#: .\school\templates\base.html:11
+msgid "Schoolia Academy"
+msgstr "سكوليا"
+
+#: .\school\templates\course\buy_all.html:19
+msgid "Choose the course you want to buy!"
+msgstr "!اختر الدورة التي تريد شراءها"
+
+#: .\school\templates\course\buy_all.html:40
+msgid "Buy now"
+msgstr "شراء الآن"
+
+#: .\school\templates\course\course.html:17
+#: .\school\templates\course\course_list.html:17
+#: .\school\templates\course\lesson_list.html:20
+#: .\school\templates\index.html:17
+msgid "Schoolia academy"
+msgstr "سكوليا"
+
+#: .\school\templates\course\lesson.html:54
+msgid "# lesson #"
+msgstr "# الدرس #"
+
+#: .\school\templates\course\lesson.html:63
+msgid "your browser doesn't support this video."
+msgstr "متصفحك لا يدعم هذا الفيديو"
+
+#: .\school\templates\course\lesson.html:68
+msgid "The video link isn't available."
+msgstr "رابط الفيديو غير موجود."
+
+#: .\school\templates\course\lesson.html:83
+msgid "Add comment"
+msgstr "إضافة تعليق"
+
+#: .\school\templates\course\lesson.html:93
+msgid "comment content"
+msgstr "محتوى التعليق"
+
+#: .\school\templates\course\lesson.html:104
+msgid "Ask questions, be respectful"
+msgstr "اطرح الأسئلة وكن محترمًا"
+
+#: .\school\templates\course\lesson.html:152
+msgid "reply...."
+msgstr "رد..."
+
+#: .\school\templates\course\lesson.html:153
+msgid "write your reply"
+msgstr "اكتب ردا"
+
+#: .\school\templates\course\lesson.html:161
+msgid "send"
+msgstr "ارسل"
+
+#: .\school\templates\course\lesson.html:197
+msgid "no comments , be the first comment!"
+msgstr "لا توجد تعليقات، كن أول من يعلق!"
+
+#: .\school\templates\course\lesson_list.html:50
+msgid "There is no courses for now"
+msgstr "لا يوجد دورات في اللحظة"
+
+#: .\school\templates\course\unit_list__.html:7
+msgid "Course Units"
+msgstr "وحدات المسار"
+
+#: .\school\templates\index.html:29
+msgid "Welcome to Schoolia academy for online courses"
+msgstr "مرحباً بكم في أكاديمية سكوليا للدورات التدريبية عبر الإنترنت"
+
+#: .\school\templates\index.html:32
+msgid "Learn, write and read more ... Science, Math, Programming and more"
+msgstr "تعلم واكتب واقرأ أكثر... العلوم والرياضيات والبرمجة والمزيد"
+
+#: .\school\templates\partials\footer.html:5
+msgid "© 2025 Amir (Devloper), All rights reserved."
+msgstr "© 2025 أمير (المطور)، جميع الحقوق محفوظة"
+
+#: .\school\templates\partials\header.html:18
+msgid "View all Courses Available to purchase them."
+msgstr "عرض جميع الدورات المتاحة للشراء."
+
+#: .\school\templates\partials\header.html:19
+msgid "Get My Courses"
+msgstr "دوراتي"
+
+#: .\school\templates\partials\header.html:28
+msgid "home"
+msgstr "الرئيسي"
+
+#: .\school\templates\partials\header.html:58
+msgid "My Courses"
+msgstr "دوراتي"
+
+#: .\school\templates\partials\header.html:65
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: .\school\templates\partials\header.html:76
+msgid "login"
+msgstr "تسجيل الدخول"
