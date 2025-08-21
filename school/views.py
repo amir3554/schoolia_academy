@@ -9,7 +9,7 @@ from school.decorators import has_courses, require_course_access
 
 @require_http_methods(["GET"])
 def index(request):
-    "The main page of the web which has all the courses ."
+    "The main page of the web which has all the courses and the home page."
     courses = Course.objects.filter().all()
     return render(request, 'index.html', { 'courses' : courses })
 
@@ -17,7 +17,7 @@ def index(request):
 
 @require_http_methods(["GET"])
 def buy_all(request):
-    "The main page of the web which has all the courses ."
+    "the page that has all the courses ready to buy ."
     courses = Course.objects.filter().all()
     return render(request, 'course/buy_all.html', { 'courses' : courses })
 
@@ -87,8 +87,6 @@ def lesson_view(request, course_id, lesson_id):
 def comment_add_lesson(request, course_id, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
     content = request.POST.get('content')
-    receiver_content_type = request.POST.get('receiver_type')
-    receiver_id = request.POST.get('receiver_id')
     if content is None:
         return redirect("Lesson",course_id, lesson.pk)
     Comment.objects.create(
@@ -108,8 +106,6 @@ def comment_add_comment(request, course_id, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
     parent = get_object_or_404(Comment, id=parent_id)
     content = request.POST.get('content')
-    receiver_content_type = request.POST.get('receiver_type')
-    receiver_id = request.POST.get('receiver_id')
     if content is None:
         return redirect("Lesson",course_id, lesson.pk)
     Comment.objects.create(

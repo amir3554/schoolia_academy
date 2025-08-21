@@ -51,6 +51,19 @@ def has_courses(redirect_name="BuyAll", redirect_on_denied=True):
             transactions = Transaction.objects.filter(student=request.user, status=TransactionStatus.COMPLETED).all()
             courses = Course.objects.filter(transaction__in=transactions).all()
 
+            is_teacher = getattr(request, 'is_teacher', None)
+            is_supervisor = getattr(request, 'is_supervisor', None)
+            teacher = getattr(request, 'teacher', None)
+
+            if teacher or is_supervisor or is_teacher:
+                if not transactions.exists() or not courses.exists():
+                    if redirect_on_denied:
+                        return redirect(redirect_name)
+                    else:
+                        return PermissionDenied
+                    
+                return func(request, courses, *args, **kwargs)
+
             if not transactions.exists() or not courses.exists():
                 if redirect_on_denied:
                     return redirect(redirect_name)
@@ -72,6 +85,13 @@ def require_course_access(redirect_name='CheckOut', redirect_on_denied=True):
 
             course = getattr(request, 'course', None)
             access = getattr(request, 'course_access', None)
+            teacher = getattr(request, 'teacher', None)
+            is_teacher = getattr(request, 'is_teacher', None)
+            is_supervisor = getattr(request, 'is_supervisor', None)
+
+
+            if (teacher) or (is_supervisor is True) or (is_teacher is True):
+                return view_func(request, *args, **kwargs)
 
             if course is None:
                 cid = kwargs.get('course_id') or kwargs.get('cid')

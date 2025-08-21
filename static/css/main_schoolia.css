@@ -74,6 +74,43 @@ footer {
     font-size: 0.9em;
 }
 
+
+
+.image-wrapper {
+    width: 100%; /* Take full width of its parent col-md-3 */
+    /* Set a fixed height for the wrapper. This is key! */
+    height: 250px; /* Adjust this value as needed for your design */
+    overflow: hidden; /* Hide any overflowing parts of the image */
+    display: flex; /* Helps center the image vertically if needed */
+    align-items: center; /* Vertically center image */
+    justify-content: center; /* Horizontally center image */
+}
+
+.slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This is the magic property */
+    object-position: center; /* Ensures the center of the image is always visible */
+}
+
+.image-wrapper-full {
+    width: 100%;
+    height: 250px; /* Or whatever fixed height you desire */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* No need for overflow: hidden if you want to see letterboxing */
+}
+
+.slider-image-full {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Image will scale down to fit entirely */
+    object-position: center;
+}
+
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-section h1 {

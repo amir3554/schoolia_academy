@@ -8,7 +8,7 @@ from .models import Article
 
 @login_required
 def article_detail(request, article_id):
-    article = get_object_or_404(Article, pk=article_id)
+    article = get_object_or_404(Article, pk=article_id, student=request.user)
     comments = (Comment.objects
                 .filter(receiver_content_type__model='article',
                         receiver_object_id=article.pk)
@@ -23,13 +23,17 @@ def article_detail(request, article_id):
 @login_required
 def article_create(request):
     if request.method == 'POST':
-      a = Article.objects.create(
-          title=request.POST['title'],
-          content=request.POST['content'],
-          image=request.FILES.get('image'),
-          student=request.user
-      )
-      return redirect('Article', a.pk)
+        try:
+            a = Article.objects.create(
+                title=request.POST['title'],
+                content=request.POST['content'],
+                image=request.FILES.get('image'),
+                student=request.user
+            )
+            return redirect('Article', a.pk)
+        except:
+            return render(request, 'article_form.html', {'article': None})
+        
     return render(request, 'article_form.html', {'article': None})
 
 
@@ -37,8 +41,8 @@ def article_create(request):
 def article_update(request, article_id):
     article = get_object_or_404(Article, pk=article_id, student=request.user)
     if request.method == 'POST':
-        article.title = request.POST['title']
-        article.content = request.POST['content']
+        article.title = request.POST.get('title') or article.title
+        article.content = request.POST.get('content') or article.content
         if request.FILES.get('image'):
             article.image = request.FILES['image']
         article.save()

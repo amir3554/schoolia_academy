@@ -39,6 +39,22 @@
     <div class="container">
         <div class="paragraph-card">
             <h2>{{ course.name }}</h2>
+
+
+            <div class="col-md-3 text-center d-none d-lg-block" >
+                <div class="image-wrapper-full">
+                    {% if course.image %}
+                    <img src="{{ course.image.url }}"
+                        alt="..." 
+                        class="img-fluid rounded slider-image-full">
+                    {% else %}
+                    <img src="#"
+                        alt="..." 
+                        class="img-fluid rounded slider-image-full">
+                    {% endif %}
+                </div>
+            </div>
+
             <p>
                 {{ course }}
             </p>

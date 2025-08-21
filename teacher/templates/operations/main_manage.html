@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+
+{% trans "School Manager Board" %}
+
+{% endblock title %}
+
+{% block extra_css %}
+
+
+<style>
+
+.list-group-item-main-color {background-color: rgb(150, 50, 110); border:0;}
+.list-group {box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34);} 
+.img-course {
+    float:left; 
+    margin-right:15px;
+    height: 128px;
+    width: 128px;
+} 
+.img-rounded {border-radius: 6px;}
+
+.main-button{
+    background-color: rgb(150, 50, 110);
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="list-group">
+
+        {% for course in object_list %}
+
+        <li class="list-group-item-main-color clearfix mt-3  list-group-item"id="course-{{ course.id }}">
+            {% if course.image %}
+            <img class="img-responsive img-rounded img-course"
+                src="{{ course.image.url }}" alt=""/>
+            {% else %}
+            <img src="#"
+                alt="..." 
+                class="img-fluid rounded slider-image-full">
+            {% endif %}
+            <h3 class="list-group-item-heading">
+                {{ course }}
+                <br>
+                <span class="pull-right btn bg bg-white" style="font-size:small;">                    
+                    {{ course.created_at }}
+                </span>
+            </h3>
+            <p class="list-group-item-text lead">
+                {{ course.description }}                
+            </p>
+            <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
+                 <div class="btn-group">
+                    <ul class="navbar-nav mb-2 mb-lg-0 me-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="color:rgba(255, 255, 255, 1);">
+                                <i class="bi bi-grid-3x3-gap"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{% url 'Course' course.id %}">
+                                        {% trans "View course Details" %}
+                                    </a>
+                                </li>
+                                
+                                
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{% url 'UnitsManage' course.id %}">
+                                        {% trans "See The Units of the Course" %}
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="btn main-button" 
+                                        href="{% url 'CourseUpdate' course.id %}">
+                                        {% trans "Update course" %}
+                                    </a>
+                                    <button class="delete-btn-course btn main-button"
+                                        data-course-id="{{ course.id }}">
+                                        <i class="bi bi-trash"></i>
+                                        {% trans "Delete" %}
+                                    </button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        {% empty %}
+
+        <h2 class="text-muted">{% trans "There is no courses for now" %}</h2>
+
+        {% endfor %}
+
+    </ul>
+</div>
+<div class="d-flex justify-content-center mt-5 py-5">
+    <button class="btn btn-lg main-button">
+        <a href="{% url 'CourseCreate' %}" class="btn main-button">
+                <i class="bi bi-plus-lg "></i> {% trans 'New Course'%}
+        </a>
+    </button>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script defer src="{% static 'js/deleteObj.js' %}"></script>
+
+{% endblock extra_js %}

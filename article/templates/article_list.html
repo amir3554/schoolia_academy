@@ -35,9 +35,17 @@
         data-course-id="{{ course.id }}"
         data-article-id="{{ article.id }}">
 
+        <div class="col-md-3 text-center d-none d-lg-block" >
+            <div class="image-wrapper-full">
+                <img src="{{ article.image.url }}"
+                    alt="{{ article.title }}" 
+                    class="img-fluid rounded slider-image-full">
+            </div>
+        </div> 
+{% comment %} 
         <img class="img-responsive img-rounded img-appointment"
-            src="{{ MEDIA_URL }}{{ article.image }}"
-            alt="..."/>
+            src=""
+            alt="..."/> {% endcomment %}
 
         <h2>{{ article.title }}</h2>
         <br>

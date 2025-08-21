@@ -11,13 +11,21 @@
 <header>
 <nav class="navbar navbar-expand-md bg-gradient navbar-dark p-2"
     style="background-color: rgb(150, 50, 110);">
-
+    {% if user.teacher %}
+    <a class="navbar-brand"
+       data-toggle="tooltip"
+       href="{% url 'CoursesManage' %}" 
+       title="{% trans "Manage All Courses And Edit Them." %}">
+        {% trans "Manage School" %}
+    </a>
+    {% else %}
     <a class="navbar-brand"
        data-toggle="tooltip"
        href="{% url 'BuyAll' %}" 
        title="{% trans "View all Courses Available to purchase them." %}">
         {% trans "Get My Courses" %}
     </a>
+    {% endif %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavCollapse" aria-controls="navbarNavCollapse" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
     </button>

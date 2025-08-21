@@ -58,6 +58,7 @@ MIDDLEWARE = [
 ]
 MIDDLEWARE += [
     'school.middleware.CourseAccessMiddleware',
+    'school.middleware.ManagerAccessMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolia.urls'
@@ -168,9 +169,9 @@ AUTH_USER_MODEL = "authentication.Student"
 
 LOGIN_URL = 'login'  
 
-#LOGOUT_REDIRECT_URL = '/amir-web/'
+LOGOUT_REDIRECT_URL = 'Index'
 
-#LOGIN_REDIRECT_URL = 'WebHome'
+LOGIN_REDIRECT_URL = 'Index'
 
 
 SESSION_COOKIE_HTTPONLY = True

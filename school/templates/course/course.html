@@ -39,6 +39,10 @@
     </div>
 </div>
 
+{% empty %}
+
+<h2 class="text-muted">{% trans "There is no units for now" %}</h2>
+
 {% endfor %} 
 
 {% block extra_js %}

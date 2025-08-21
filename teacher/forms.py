@@ -11,12 +11,13 @@ class CourseModelForm(forms.ModelForm):
         
         model = Course
 
-        fields = ['name', 'description', 'price']
+        fields = ['name', 'description', 'price', 'image']
 
         labels = {
             'name' : _("name"),
             'description' : _("description"),
             'price' : _('price'),
+            'image' : _('image'),
         }
 
         widgets = {
@@ -44,6 +45,7 @@ class UnitModelForm(forms.ModelForm):
             'name' : forms.TextInput(attrs=attrs),
             'description' : forms.Textarea(attrs=attrs),
             'course' : forms.Select(attrs=attrs),
+            'image' : forms.FileInput(attrs=attrs),
         }
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-19 09:17+0200\n"
+"POT-Creation-Date: 2025-08-21 12:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,93 +19,114 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: .\article\templates\article.html:45
+#: .\article\templates\article.html:44
 msgid "Edit"
 msgstr "تعديل"
 
-#: .\article\templates\article.html:52
+#: .\article\templates\article.html:51
 msgid "No Content Yet"
 msgstr "لا محتوى بعد"
 
-#: .\article\templates\article.html:60
+#: .\article\templates\article.html:59
 msgid "Add Comment"
 msgstr "إضافة تعليق"
 
-#: .\article\templates\article.html:71 .\school\forms.py:18
+#: .\article\templates\article.html:70 .\school\forms.py:18
+#: .\teacher\forms.py:62
 msgid "content"
 msgstr "المحتوى"
 
-#: .\article\templates\article.html:81
+#: .\article\templates\article.html:80
 msgid "Respecting the etiquette of dialogue helps everyone"
 msgstr "إن احترام آداب الحوار يساعد الجميع"
 
-#: .\article\templates\article.html:84 .\article\templates\article.html:135
+#: .\article\templates\article.html:83 .\article\templates\article.html:141
 #: .\school\templates\course\lesson.html:107
 msgid "Post"
 msgstr "نشر"
 
-#: .\article\templates\article.html:95
+#: .\article\templates\article.html:94
 #: .\school\templates\course\lesson.html:118
 msgid "comments"
 msgstr "التعليقات"
 
-#: .\article\templates\article.html:111 .\article\templates\article.html:154
+#: .\article\templates\article.html:110 .\article\templates\article.html:160
 #: .\school\templates\course\lesson.html:134
 #: .\school\templates\course\lesson.html:179
 msgid "ago"
 msgstr "منذ"
 
-#: .\article\templates\article.html:114
+#: .\article\templates\article.html:113
 #: .\school\templates\course\lesson.html:138
 msgid "reply"
 msgstr "رد"
 
-#: .\article\templates\article.html:128
+#: .\article\templates\article.html:126
+#, fuzzy
+#| msgid "write your reply"
+msgid "Write Your reply...."
+msgstr "اكتب ردا"
+
+#: .\article\templates\article.html:127
 msgid "write reply"
 msgstr "اكتب ردا"
 
-#: .\article\templates\article.html:170
+#: .\article\templates\article.html:176
 msgid "No Comments Yet"
 msgstr "لا تعليقات بعد"
 
-#: .\article\templates\article_form.html:7
-#: .\article\templates\article_form.html:23
+#: .\article\templates\article_form.html:6
+#: .\article\templates\article_form.html:21
 msgid "Edit Article"
 msgstr "عدل المقال"
 
-#: .\article\templates\article_form.html:7
-#: .\article\templates\article_form.html:24
+#: .\article\templates\article_form.html:6
+#: .\article\templates\article_form.html:22
+#: .\school\templates\partials\header.html:71
 msgid "Write Article"
 msgstr "اكتب مقالا"
 
-#: .\article\templates\article_form.html:35
+#: .\article\templates\article_form.html:33
 msgid "Title"
 msgstr "عنوان"
 
-#: .\article\templates\article_form.html:42
-#: .\article\templates\article_form.html:43
+#: .\article\templates\article_form.html:40
+#: .\article\templates\article_form.html:41
 msgid "Content"
 msgstr "محتوى"
 
-#: .\article\templates\article_form.html:48
+#: .\article\templates\article_form.html:46
+#: .\teacher\templates\operations\create_course.html:39
 msgid "Image"
 msgstr "صورة"
 
-#: .\article\templates\article_form.html:58
+#: .\article\templates\article_form.html:56
+#: .\teacher\templates\operations\create_course.html:37
+#: .\teacher\templates\operations\create_unit.html:33
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: .\article\templates\article_form.html:60
+#: .\article\templates\article_form.html:58
 msgid "Save Settings"
 msgstr "حفظ الإعدادات"
 
-#: .\article\templates\article_form.html:60
+#: .\article\templates\article_form.html:58
 msgid "Post Article"
 msgstr "نشر المقال"
 
 #: .\article\templates\article_list.html:20
 msgid "Articles Schoolia"
 msgstr "مقالات سكوليا"
+
+#: .\article\templates\article_list.html:79
+#: .\article\templates\article_list.html:84
+msgid "Previous"
+msgstr "السابق"
+
+#: .\article\templates\article_list.html:92
+#: .\article\templates\article_list.html:97
+msgid "Next"
+msgstr "التالي"
 
 #: .\authentication\templates\profile_edit.html:17
 msgid "Edit Profile"
@@ -144,7 +165,7 @@ msgid "Create Account"
 msgstr "عمل حساب"
 
 #: .\authentication\templates\registration\register.html:34
-#: .\school\templates\partials\header.html:73
+#: .\school\templates\partials\header.html:91
 msgid "Register"
 msgstr "تسجيل"
 
@@ -194,11 +215,11 @@ msgstr "!تمت العملية بنجاح. يمكنك الآن الانضمام 
 msgid "Back To Main Page."
 msgstr "العودة إلى الصفحة الرئيسية"
 
-#: .\school\forms.py:17
+#: .\school\forms.py:17 .\teacher\forms.py:61
 msgid "title"
 msgstr "عنوان"
 
-#: .\school\forms.py:19
+#: .\school\forms.py:19 .\teacher\forms.py:20 .\teacher\forms.py:63
 msgid "image"
 msgstr "صورة"
 
@@ -214,12 +235,30 @@ msgstr "!اختر الدورة التي تريد شراءها"
 msgid "Buy now"
 msgstr "شراء الآن"
 
+#: .\school\templates\course\buy_all.html:51
+#, fuzzy
+#| msgid "There is no courses for now"
+msgid "There is no courses to buy for now"
+msgstr "لا يوجد دورات في اللحظة"
+
 #: .\school\templates\course\course.html:17
 #: .\school\templates\course\course_list.html:17
 #: .\school\templates\course\lesson_list.html:20
 #: .\school\templates\index.html:17
 msgid "Schoolia academy"
 msgstr "سكوليا"
+
+#: .\school\templates\course\course.html:44
+#: .\teacher\templates\operations\manage_units.html:92
+#, fuzzy
+#| msgid "There is no courses for now"
+msgid "There is no units for now"
+msgstr "لا يوجد دورات في اللحظة"
+
+#: .\school\templates\course\course_list.html:44
+#: .\teacher\templates\operations\main_manage.html:100
+msgid "There is no courses for now"
+msgstr "لا يوجد دورات في اللحظة"
 
 #: .\school\templates\course\lesson.html:54
 msgid "# lesson #"
@@ -262,7 +301,10 @@ msgid "no comments , be the first comment!"
 msgstr "لا توجد تعليقات، كن أول من يعلق!"
 
 #: .\school\templates\course\lesson_list.html:50
-msgid "There is no courses for now"
+#: .\teacher\templates\operations\manage_lessons.html:92
+#, fuzzy
+#| msgid "There is no courses for now"
+msgid "There is no lessons for now"
 msgstr "لا يوجد دورات في اللحظة"
 
 #: .\school\templates\course\unit_list__.html:7
@@ -282,25 +324,205 @@ msgid "© 2025 Amir (Devloper), All rights reserved."
 msgstr "© 2025 أمير (المطور)، جميع الحقوق محفوظة"
 
 #: .\school\templates\partials\header.html:18
+msgid "Manage All Courses And Edit Them."
+msgstr "إدارة جميع الدورات وتحريرها"
+
+#: .\school\templates\partials\header.html:19
+msgid "Manage School"
+msgstr "إدارة المدرسة"
+
+#: .\school\templates\partials\header.html:25
 msgid "View all Courses Available to purchase them."
 msgstr "عرض جميع الدورات المتاحة للشراء."
 
-#: .\school\templates\partials\header.html:19
+#: .\school\templates\partials\header.html:26
 msgid "Get My Courses"
 msgstr "دوراتي"
 
-#: .\school\templates\partials\header.html:28
+#: .\school\templates\partials\header.html:36
 msgid "home"
 msgstr "الرئيسي"
 
-#: .\school\templates\partials\header.html:58
+#: .\school\templates\partials\header.html:41
+#, fuzzy
+#| msgid "Schoolia Academy"
+msgid "Schoolia Articles"
+msgstr "سكوليا"
+
+#: .\school\templates\partials\header.html:66
+#, fuzzy
+#| msgid "Edit Article"
+msgid "My Articles"
+msgstr "عدل المقال"
+
+#: .\school\templates\partials\header.html:76
 msgid "My Courses"
 msgstr "دوراتي"
 
-#: .\school\templates\partials\header.html:65
+#: .\school\templates\partials\header.html:83
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
-#: .\school\templates\partials\header.html:76
+#: .\school\templates\partials\header.html:94
 msgid "login"
 msgstr "تسجيل الدخول"
+
+#: .\teacher\forms.py:17 .\teacher\forms.py:39
+msgid "name"
+msgstr "الإسم"
+
+#: .\teacher\forms.py:18 .\teacher\forms.py:40
+msgid "description"
+msgstr "الوصف"
+
+#: .\teacher\forms.py:19
+#, fuzzy
+#| msgid "Price"
+msgid "price"
+msgstr "السعر"
+
+#: .\teacher\forms.py:41
+#, fuzzy
+#| msgid "My Courses"
+msgid "course"
+msgstr "دوراتي"
+
+#: .\teacher\forms.py:64
+msgid "video"
+msgstr "الفيديو"
+
+#: .\teacher\forms.py:65
+msgid "youtube_id"
+msgstr "معرف الفيديو"
+
+#: .\teacher\forms.py:66
+msgid "unit"
+msgstr "الوحدة"
+
+#: .\teacher\models.py:6
+msgid "Teacher"
+msgstr "أستاذ"
+
+#: .\teacher\models.py:7
+msgid "Staff"
+msgstr "موظف"
+
+#: .\teacher\models.py:8
+msgid "Supervisor"
+msgstr "مشرف"
+
+#: .\teacher\templates\operations\create_course.html:6
+#: .\teacher\templates\operations\create_course.html:23
+#, fuzzy
+#| msgid "My Courses"
+msgid "Edit Course"
+msgstr "دوراتي"
+
+#: .\teacher\templates\operations\create_course.html:6
+#: .\teacher\templates\operations\create_course.html:25
+#, fuzzy
+#| msgid "My Courses"
+msgid "Add Course"
+msgstr "دوراتي"
+
+#: .\teacher\templates\operations\create_course.html:49
+#: .\teacher\templates\operations\create_lesson.html:43
+#: .\teacher\templates\operations\create_unit.html:35
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: .\teacher\templates\operations\create_course.html:49
+#: .\teacher\templates\operations\create_lesson.html:43
+#: .\teacher\templates\operations\create_unit.html:35
+msgid "Add"
+msgstr "إضافة"
+
+#: .\teacher\templates\operations\create_lesson.html:7
+#: .\teacher\templates\operations\create_lesson.html:25
+#, fuzzy
+#| msgid "# lesson #"
+msgid "Edit lesson"
+msgstr "# الدرس #"
+
+#: .\teacher\templates\operations\create_lesson.html:7
+#: .\teacher\templates\operations\create_lesson.html:27
+#, fuzzy
+#| msgid "# lesson #"
+msgid "Add lesson"
+msgstr "# الدرس #"
+
+#: .\teacher\templates\operations\create_lesson.html:41
+#, fuzzy
+#| msgid "Cancel"
+msgid "cancel"
+msgstr "إلغاء"
+
+#: .\teacher\templates\operations\create_unit.html:7
+#: .\teacher\templates\operations\create_unit.html:23
+#, fuzzy
+#| msgid "Edit"
+msgid "Edit Unit"
+msgstr "تعديل"
+
+#: .\teacher\templates\operations\create_unit.html:7
+#: .\teacher\templates\operations\create_unit.html:23
+#, fuzzy
+#| msgid "Add Comment"
+msgid "Add Unit"
+msgstr "إضافة تعليق"
+
+#: .\teacher\templates\operations\main_manage.html:7
+#: .\teacher\templates\operations\manage_lessons.html:7
+#: .\teacher\templates\operations\manage_units.html:7
+msgid "School Manager Board"
+msgstr "لوحة إدارة المدرسة"
+
+#: .\teacher\templates\operations\main_manage.html:73
+msgid "View course Details"
+msgstr "عرض تفاصيل الدورة"
+
+#: .\teacher\templates\operations\main_manage.html:81
+msgid "See The Units of the Course"
+msgstr "انظر وحدات الدورة"
+
+#: .\teacher\templates\operations\main_manage.html:88
+msgid "Update course"
+msgstr "تحديث الدورة"
+
+#: .\teacher\templates\operations\main_manage.html:109
+#, fuzzy
+#| msgid "My Courses"
+msgid "New Course"
+msgstr "دوراتي"
+
+#: .\teacher\templates\operations\manage_lessons.html:73
+msgid "View lesson Details"
+msgstr "عرض تفاصيل الدرس"
+
+#: .\teacher\templates\operations\manage_lessons.html:80
+#, fuzzy
+#| msgid "# lesson #"
+msgid "Update lesson"
+msgstr "# الدرس #"
+
+#: .\teacher\templates\operations\manage_lessons.html:101
+#, fuzzy
+#| msgid "# lesson #"
+msgid "New lesson"
+msgstr "# الدرس #"
+
+#: .\teacher\templates\operations\manage_units.html:65
+msgid "View unit Details"
+msgstr "عرض تفاصيل الوحدة"
+
+#: .\teacher\templates\operations\manage_units.html:73
+msgid "See The Lessons of the unit"
+msgstr "انظر دروس الوحدة"
+
+#: .\teacher\templates\operations\manage_units.html:80
+msgid "Update Unit"
+msgstr "تحديث الوحدة"
+
+#: .\teacher\templates\operations\manage_units.html:100
+msgid "New unit"
+msgstr "وحدة جديدة"

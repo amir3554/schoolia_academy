@@ -10,6 +10,7 @@ from authentication.models import Student
 class Course(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

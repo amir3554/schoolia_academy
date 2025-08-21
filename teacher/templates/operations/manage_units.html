@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+
+{% trans "School Manager Board" %}
+
+{% endblock title %}
+
+{% block extra_css %}
+
+
+<style>
+
+.list-group-item-main-color {background-color: rgb(150, 50, 110); border:0;}
+.list-group {box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34);} 
+.img-course {
+    float:left; 
+    margin-right:15px;
+    height: 128px;
+    width: 128px;
+} 
+.img-rounded {border-radius: 6px;}
+
+.main-button{
+    background-color: rgb(150, 50, 110);
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="list-group">
+
+        {% for unit in object_list %}
+
+        <li class="list-group-item-main-color clearfix mt-3  list-group-item"id="unit-{{ unit.id }}">
+            <h3 class="list-group-item-heading">
+                {{ unit }}
+                <br>
+                <span class="pull-right btn bg bg-white" style="font-size:small;">                    
+                    {{ unit.created_at }}
+                </span>
+            </h3>
+            <p class="list-group-item-text lead">
+                {{ Unit.description }}                
+            </p>
+            <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
+                 <div class="btn-group">
+                    <ul class="navbar-nav mb-2 mb-lg-0 me-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="color:rgba(255, 255, 255, 1);">
+                                <i class="bi bi-grid-3x3-gap"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{% url 'Unit' course.id unit.id %}">
+                                        {% trans "View unit Details" %}
+                                    </a>
+                                </li>
+                                
+                                
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{% url 'LessonsManage' course.id unit.id %}">
+                                        {% trans "See The Lessons of the unit" %}
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="btn" style="background-color:rgb(150, 50, 110);" 
+                                        href="{% url 'UnitUpdate' unit.id %}">
+                                        {% trans "Update Unit" %}
+                                    </a>
+                                    <button class="delete-btn-unit btn main-button"
+                                        data-unit-id="{{ unit.id }}">
+                                        <i class="bi bi-trash"></i>
+                                        {% trans "Delete" %}
+                                    </button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        {% empty %}
+
+        <h2 class="text-muted">{% trans "There is no units for now" %}</h2>
+
+        {% endfor %}
+    </ul>
+</div>
+<div class="d-flex justify-content-center mt-5 py-5">
+    <button class="btn btn-lg main-button">
+        <a href="{% url 'UnitCreate' %}" class="btn main-button">
+                <i class="bi bi-plus-lg "></i> {% trans 'New unit'%}
+        </a>
+    </button>
+</div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script defer src="{% static 'js/deleteObj.js' %}"></script>
+
+{% endblock extra_js %}

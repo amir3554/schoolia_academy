@@ -38,7 +38,7 @@
         <div class="col-md-6">{{ form.youtube_id.label_tag }}{{ form.youtube_id }}</div>
         <div class="col-md-6">{{ form.unit.label_tag }}{{ form.unit }}</div>
         <div class="col-12 d-flex justify-content-end gap-2">
-            <a href="{% url 'course_list' %}" class="btn btn-outline-secondary">إلغاء</a>
+            <a href="{% url 'CoursesManage' %}" class="btn btn-outline-secondary">{% trans "cancel" %}</a>
             <button type="submit" class="btn btn-primary">
             {% if form.instance.pk %}{% trans "Confirm" %}{% else %}{% trans "Add" %}{% endif %}
             </button>

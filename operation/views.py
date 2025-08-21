@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http.response import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 from schoolia import settings
 from school.models import Course
@@ -11,12 +12,13 @@ from stripe.error import SignatureVerificationError #type: ignore
 
 from .models import Transaction , TransactionStatus, PaymentMethod
 
+from .decorators import not_teacher
+
 import math
 
 
 
-
-def make_transaction(request, course_id, pm):
+def make_transaction(user_id, course_id, pm):
     course = get_object_or_404(
         Course,
         pk=course_id,
@@ -27,7 +29,7 @@ def make_transaction(request, course_id, pm):
             'payment_method' : pm,
         },
         course_id = course.pk,
-        student_id = request.user.pk
+        student_id = user_id
     )
     return transaction
 
@@ -40,7 +42,8 @@ def transaction_complete(transaction_id):
     transaction.save()
 
 
-
+@login_required
+@not_teacher
 def check_out(request, course_id):
     course = get_object_or_404(
         Course,
@@ -62,6 +65,7 @@ def check_out(request, course_id):
     )
 
 
+@login_required
 def check_out_complete(request):
     return render(
         request, 'check_out_complete.html'
@@ -78,9 +82,11 @@ def get_publishable_key(request):
     )
 
 
+
+@login_required
 def stripe_transaction(request, course_id):
     try:
-        transaction = make_transaction(request, course_id, PaymentMethod.STRIPE)
+        transaction = make_transaction(request.user.pk, course_id, PaymentMethod.STRIPE)
     
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -128,7 +134,6 @@ def stripe_webhook(request):
         return HttpResponse(status=400)
     
     try:
-        print("Event type received:", stripe_event_webhook.type)
         if stripe_event_webhook.type == 'payment_intent.succeeded':
             payment_intent = stripe_event_webhook.data.object
             transaction_id = payment_intent.metadata.transaction #type:ignore
