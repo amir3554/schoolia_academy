@@ -2,12 +2,12 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods 
+from django.shortcuts import get_object_or_404
 from school.models import Course, Unit, Lesson
 from django.http import JsonResponse
 from .models import Teacher, Role
@@ -24,11 +24,11 @@ class CoursesManageListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
@@ -46,11 +46,11 @@ class UnitsManageListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
@@ -87,11 +87,11 @@ class LessonsManageListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
@@ -129,11 +129,11 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor
 
@@ -158,11 +158,11 @@ class UnitCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor
 
@@ -187,11 +187,11 @@ class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor
 
@@ -218,11 +218,11 @@ class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
@@ -247,11 +247,11 @@ class UnitUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
@@ -276,11 +276,11 @@ class LessonUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         is_supervisor = getattr(self.request, 'is_supervisor', None)
         teacher = getattr(self.request, 'teacher', None)
         if teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_teacher is None:
-           return HttpResponseForbidden()
+           return False
         if is_supervisor is None:
-           return HttpResponseForbidden()
+           return False
         
         return is_supervisor or is_teacher
 
