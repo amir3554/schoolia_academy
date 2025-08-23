@@ -1,0 +1,4 @@
+release: python manage.py migrate
+heroku ps:scale web=1
+heroku run python manage.py collectstatic --noinput
+heroku run python manage.py migrate
