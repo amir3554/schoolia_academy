@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-vgtums^kz5+f2#9w==15l0-q&k$gua8rohfsbh6s75krjicqa9
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://schoolia-app-456b3f26b08d.herokuapp.com', '127.0.0.1',
+    'schoolia-app-456b3f26b08d.herokuapp.com', '127.0.0.1',
 ]
 
 
