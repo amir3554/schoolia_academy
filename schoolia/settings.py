@@ -91,34 +91,45 @@ WSGI_APPLICATION = 'schoolia.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        'HOST' : 'n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
-        'USERNAME' : 'fwc89wuhnzj9ddyw',
-        'PASSWORD' : 'nxoys9aebmkvkeni',
-        'PORT' : '3306',
-        'DATABASE' : 'x8doknpvurifbfhg',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         #'ENGINE': 'django.db.backends.sqlite3',
+#         #'NAME': BASE_DIR / 'db.sqlite3',
+#         'HOST' : 'n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+#         'USERNAME' : 'fwc89wuhnzj9ddyw',
+#         'PASSWORD' : 'nxoys9aebmkvkeni',
+#         'PORT' : '3306',
+#         'DATABASE' : 'x8doknpvurifbfhg',
+#     }
+# }
+
+# import os
+# import dj_database_url
 
 
+# # parse الرابط دون ssl_require
+# config = dj_database_url.parse(
+#     os.environ['JAWSDB_MARIA_URL'],
+#     conn_max_age=600,
+# )
 
 import os
 import dj_database_url
 
+DATABASES = {
+    "default": dj_database_url.config(
+        env="JAWSDB_MARIA_URL",          # هذا المتغير يضعه إضافة JawsDB Maria
+        conn_max_age=600,
+    )
+}
+# (اختياري) إعدادات آمنة/صارمة لـ MySQL/MariaDB
+DATABASES["default"]["OPTIONS"] = {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
 
-# parse الرابط دون ssl_require
-config = dj_database_url.parse(
-    os.environ['JAWSDB_MARIA_URL'],
-    conn_max_age=600,
-)
 
-# تخلّص من OPTIONS كلها حتى لا يمرر ssl_mode أو sslmode
-config.pop('OPTIONS', None)
+# # تخلّص من OPTIONS كلها حتى لا يمرر ssl_mode أو sslmode
+# config.pop('OPTIONS', None)
 
-DATABASES['default'] = config #type:ignore
+# DATABASES['default'] = config #type:ignore
 
 
 
