@@ -177,7 +177,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = f'https://{os.environ["AWS_STORAGE_BUCKET_NAME"]}.s3.amazonaws.com/'#'/media/'
+MEDIA_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME", '')}.s3.amazonaws.com/'#'/media/'
 
 
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') #or secret_info1.STRIPE_PUBLISHABLE_KEY
