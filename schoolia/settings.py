@@ -93,29 +93,7 @@ WSGI_APPLICATION = 'schoolia.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         #'ENGINE': 'django.db.backends.sqlite3',
-#         #'NAME': BASE_DIR / 'db.sqlite3',
-#         'HOST' : 'n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
-#         'USERNAME' : 'fwc89wuhnzj9ddyw',
-#         'PASSWORD' : 'nxoys9aebmkvkeni',
-#         'PORT' : '3306',
-#         'DATABASE' : 'x8doknpvurifbfhg',
-#     }
-# }
-
-# import os
-# import dj_database_url
-
-
-# # parse الرابط دون ssl_require
-# config = dj_database_url.parse(
-#     os.environ['JAWSDB_MARIA_URL'],
-#     conn_max_age=600,
-# )
 
 import os
 import dj_database_url
@@ -126,15 +104,7 @@ DATABASES = {
         conn_max_age=600,
     )
 }
-# (اختياري) إعدادات آمنة/صارمة لـ MySQL/MariaDB
 DATABASES["default"]["OPTIONS"] = {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
-
-
-# # تخلّص من OPTIONS كلها حتى لا يمرر ssl_mode أو sslmode
-# config.pop('OPTIONS', None)
-
-# DATABASES['default'] = config #type:ignore
-
 
 
 
@@ -190,9 +160,6 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-MEDIA_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME", '')}.s3.amazonaws.com/'#'/media/'
 
 
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') #or secret_info1.STRIPE_PUBLISHABLE_KEY
@@ -239,10 +206,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "schooliabucket")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
-AWS_QUERYSTRING_AUTH = False
+
 
 from storages.backends.s3boto3 import S3Boto3Storage
 
@@ -251,5 +215,38 @@ class MediaRootS3Boto3Storage(S3Boto3Storage):
     default_acl = "public-read"
 
 
-DEFAULT_FILE_STORAGE = "schoolia.settings.MediaRootS3Boto3Storage"  # عدّل المسار لملف settings الفعلي
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+DEFAULT_FILE_STORAGE = "schoolia.settings.MediaRootS3Boto3Storage"
+#MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#MEDIA_URL = f'https://{os.environ.get("BUCKET", 'schooliabucket')}.s3.amazonaws.com/'#'/media/'
+
+
+
+
+USE_S3 = bool(True)#os.getenv("USE_S3") == "1"
+
+INSTALLED_APPS += ["storages"]
+
+
+
+
+if USE_S3:
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "schooliabucket")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = None 
+
+    # استخدم S3 للميديا فقط (الصور/الملفات المرفوعة)
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+else:
+    # تخزين محلي (للتطوير)
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+
+    
