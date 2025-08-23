@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-from schoolia import secret_info1
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -181,16 +180,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = f'https://{os.environ["AWS_STORAGE_BUCKET_NAME"]}.s3.amazonaws.com/'#'/media/'
 
 
-SUPERUSER_EMAIL1 = secret_info1.SUPERUSER_EMAIL1
-SUPERUSER_EMAIL2 = secret_info1.SUPERUSER_EMAIL2
-SUPERUSER_PASSKEY = secret_info1.SUPERUSER_PASSKEY
-
-
-
-
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') or secret_info1.STRIPE_PUBLISHABLE_KEY
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or secret_info1.STRIPE_SECRET_KEY
-STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET') or secret_info1.STRIPE_ENDPOINT_SECRET
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') #or secret_info1.STRIPE_PUBLISHABLE_KEY
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') #or secret_info1.STRIPE_SECRET_KEY
+STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET') #or secret_info1.STRIPE_ENDPOINT_SECRET
 
 
 
