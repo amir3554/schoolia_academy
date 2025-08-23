@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'school',
     'article',
     'teacher',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -236,3 +237,19 @@ CSRF_TRUSTED_ORIGINS = [
     "https://schoolia-app-456b3f26b08d.herokuapp.com",
     "https://*.herokuapp.com",
 ]
+
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "schooliabucket")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+AWS_QUERYSTRING_AUTH = False
+
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class MediaRootS3Boto3Storage(S3Boto3Storage):
+    location = "media"
+    default_acl = "public-read"
+
+
+DEFAULT_FILE_STORAGE = "schoolia.settings.MediaRootS3Boto3Storage"  # عدّل المسار لملف settings الفعلي
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
