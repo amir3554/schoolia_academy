@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-vgtums^kz5+f2#9w==15l0-q&k$gua8rohfsbh6s75krjicqa9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://schoolia-app-456b3f26b08d.herokuapp.com', '127.0.0.1:8000',
+]
 
 
 # Application definition
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     "django.middleware.locale.LocaleMiddleware",
@@ -91,10 +94,36 @@ WSGI_APPLICATION = 'schoolia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'HOST' : 'u615qyjzybll9lrm.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+        'USERNAME' : 'secbydoh7yxgfppj',
+        'PASSWORD' : 'oux0ol0y50wpbq3q',
+        'PORT' : '3306',
+        'DATABASE' : 'v1y9spi92oaqpgb0',
     }
 }
+
+
+
+import os
+import dj_database_url
+
+
+# parse الرابط دون ssl_require
+config = dj_database_url.parse(
+    os.environ['JAWSDB_MARIA_URL'],
+    conn_max_age=600,
+)
+
+# تخلّص من OPTIONS كلها حتى لا يمرر ssl_mode أو sslmode
+config.pop('OPTIONS', None)
+
+DATABASES['default'] = config #type:ignore
+
+
+
+
 
 
 # Password validation
@@ -138,6 +167,10 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -145,7 +178,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = f'https://{os.environ["AWS_STORAGE_BUCKET_NAME"]}.s3.amazonaws.com/'#'/media/'
 
 
 SUPERUSER_EMAIL1 = secret_info1.SUPERUSER_EMAIL1
@@ -155,9 +188,9 @@ SUPERUSER_PASSKEY = secret_info1.SUPERUSER_PASSKEY
 
 
 
-STRIPE_PUBLISHABLE_KEY = secret_info1.STRIPE_PUBLISHABLE_KEY
-STRIPE_SECRET_KEY = secret_info1.STRIPE_SECRET_KEY
-STRIPE_ENDPOINT_SECRET = secret_info1.STRIPE_ENDPOINT_SECRET
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') or secret_info1.STRIPE_PUBLISHABLE_KEY
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or secret_info1.STRIPE_SECRET_KEY
+STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET') or secret_info1.STRIPE_ENDPOINT_SECRET
 
 
 
