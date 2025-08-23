@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-vgtums^kz5+f2#9w==15l0-q&k$gua8rohfsbh6s75krjicqa9
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'schoolia-app-456b3f26b08d.herokuapp.com', '127.0.0.1',
+    'schoolia-app-456b3f26b08d.herokuapp.com',
+    '.herokuapp.com',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
@@ -229,4 +232,7 @@ LOCALE_PATHS = [BASE_DIR / "locale"]  # where .po/.mo live
 
 
 
-CSRF_TRUSTED_ORIGINS = ["https://schoolia-app-456b3f26b08d.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://schoolia-app-456b3f26b08d.herokuapp.com",
+    "https://*.herokuapp.com",
+]
