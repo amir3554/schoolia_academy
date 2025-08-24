@@ -31,6 +31,9 @@
 {% endblock %}
 
 {% block content %}
+<img class="img-responsive img-rounded img-course"
+src="https://schooliamain.s3.us-east-1.amazonaws.com/media/courses/7cdf4049-ed62-4768-ba4e-aaa5ac9b2558-Dark-Space.jpg" alt=""/>
+
 <div class="container">
     <ul class="list-group">
 
@@ -39,7 +42,7 @@
         <li class="list-group-item-main-color clearfix mt-3  list-group-item"id="course-{{ course.id }}">
             {% if course.image %}
             <img class="img-responsive img-rounded img-course"
-                src="{{ course.image.url }}" alt=""/>
+                src="{{ course.image }}" alt=""/>
             {% else %}
             <img src="#"
                 alt="..." 
