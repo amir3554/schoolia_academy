@@ -12,6 +12,8 @@ from school.models import Course, Unit, Lesson
 from django.http import JsonResponse
 from .models import Teacher, Role
 from teacher.forms import CourseModelForm, UnitModelForm, LessonModelForm
+import uuid
+from utils.s3 import upload_fileobj_to_s3, public_url
 
 
 class CoursesManageListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -139,7 +141,12 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        self.object = form.save()
+        self.object = form.save(commit=False)
+        file = self.request.FILES['image']
+        key = f"media/{uuid.uuid4()}-{file.name}"
+        upload_fileobj_to_s3(file, key, content_type=file.content_type)
+        self.object.image_url = public_url(key)     # خزّن الرابط بدلاً من ImageField
+        self.object.save()
         return super().form_valid(form)
 
 
