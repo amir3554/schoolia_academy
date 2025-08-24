@@ -227,7 +227,7 @@ DEFAULT_FILE_STORAGE = "schoolia.settings.MediaRootS3Boto3Storage"
 
 USE_S3 = bool(True)#os.getenv("USE_S3") == "1"
 
-INSTALLED_APPS += ["storages"]
+#INSTALLED_APPS += ["storages"]
 
 
 
