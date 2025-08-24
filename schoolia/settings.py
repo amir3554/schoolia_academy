@@ -218,13 +218,7 @@ if USE_S3:
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = None 
 
-    from storages.backends.s3boto3 import S3Boto3Storage
-
-    class MediaRootS3Boto3Storage(S3Boto3Storage):
-        location = "media"
-        default_acl = "public-read"
-
-    DEFAULT_FILE_STORAGE = "path.to.MediaRootS3Boto3Storage"
+    DEFAULT_FILE_STORAGE = "schoolia.storage_backend.MediaRootS3Boto3Storage" 
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 else:
     # تخزين محلي (للتطوير)
