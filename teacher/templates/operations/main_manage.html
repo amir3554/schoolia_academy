@@ -39,7 +39,7 @@
         <li class="list-group-item-main-color clearfix mt-3  list-group-item"id="course-{{ course.id }}">
             {% if course.image %}
             <img class="img-responsive img-rounded img-course"
-                src="{{ course.image }}" alt=""/>
+                src="{{ course.image.url }}" alt=""/>
             {% else %}
             <img src="#"
                 alt="..." 

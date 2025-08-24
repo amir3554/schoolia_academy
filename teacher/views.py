@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from .models import Teacher, Role
 from teacher.forms import CourseModelForm, UnitModelForm, LessonModelForm
 import uuid
+import random
 from utils.s3 import upload_fileobj_to_s3, public_url
 
 
@@ -160,7 +161,7 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
                 except Exception:
                     pass
 
-                key = f"media/courses/{uuid.uuid4()}-{f.name}"
+                key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{f.name}"
                 upload_fileobj_to_s3(f, key, content_type=f.content_type)
                 self.object.image = public_url(key) 
 
