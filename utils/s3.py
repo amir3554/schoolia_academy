@@ -15,15 +15,20 @@ def upload_fileobj_to_s3(file_obj, key, content_type=None):
     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
     )
-    extra = {}
-    if content_type:
-        extra["ContentType"] = content_type
-    # لا ترسل ACL إذا كان البكت مفعّل فيه Bucket owner enforced (الافتراضي اليوم)
-    try:
-        s3_clent.upload_fileobj(file_obj, BUCKET, key, ExtraArgs=extra)
-    except ClientError as e:
-        # رجّع سبب الخطأ للتشخيص
-        raise RuntimeError(f"S3 upload failed: {e}")
+    extra = {"ContentType": content_type} if content_type else {}
+
+    if hasattr(file_obj, "seek"):
+        try:
+            file_obj.seek(0)
+        except Exception:
+            pass
+    if hasattr(file_obj, "open"):
+        try:
+            file_obj.open()
+        except Exception:
+            pass
+    s3_clent.upload_fileobj(file_obj, BUCKET, key, ExtraArgs=extra)
+
 
 def public_url(key):
     return f"https://{BUCKET}.s3.{REGION}.amazonaws.com/{key}"
