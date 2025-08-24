@@ -173,7 +173,7 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
     def get_success_url(self):
-        return reverse('Course', args=[self.object.pk])
+        return reverse('UnitsManage', args=[self.object.pk])
 
 
 class UnitCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -228,7 +228,7 @@ class UnitCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
     def get_success_url(self):
-        return reverse('Unit', args=[self.object.course.pk, self.object.pk])
+        return reverse('LessonsManage', args=[self.object.course.pk, self.object.pk])
 
 
 class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
