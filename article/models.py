@@ -6,7 +6,7 @@ from authentication.models import Student
 class Article(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField(null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='media/articles/')
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

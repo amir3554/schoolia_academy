@@ -61,18 +61,13 @@ class StudentCreationForm(UserCreationForm):
         widget=forms.Textarea(attrs=attrs)
     )
 
-    profile_image = forms.ImageField(
-        label='profile image (Optional)',
-        required=False,
-        widget=forms.ClearableFileInput(attrs=attrs)
-    )
 
 
     class Meta:
        model = Student
        fields = [
             'username', 'email', 'first_name', 'last_name', 
-            'password1', 'password2', 'bio', 'profile_image'
+            'password1', 'password2', 'bio'
         ]
         
 class ChangeUserPasswordForm(PasswordChangeForm):
