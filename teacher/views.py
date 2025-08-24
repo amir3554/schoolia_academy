@@ -1,7 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -138,17 +138,49 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
            return False
         
         return is_supervisor
+    
+    
+    def form_valid(self, form):
+            # لا تحفظ الملف عبر Django
+            self.object = form.save(commit=False)
+
+            f = self.request.FILES.get("image")
+            if f:
+                # تأكد أن الستريم مفتوح وبدايته عند 0
+                try:
+                    f.open()
+                except Exception:
+                    pass
+                try:
+                    f.seek(0)
+                except Exception:
+                    pass
+
+                key = f"media/courses/{uuid.uuid4()}-{f.name}"
+                upload_fileobj_to_s3(f, key, content_type=f.content_type)
+                self.object.image_url = public_url(key)  # خزّن رابط S3 فقط
+
+                # مهم: امنع Django من محاولة حفظ الملف مرة أخرى
+                form.cleaned_data["image"] = None
+                if "image" in form.files:
+                    del form.files["image"]
+
+            self.object.save()
+            return HttpResponseRedirect(self.get_success_url())
+
+    
 
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        self.object = form.save(commit=False)
-        if self.request.FILES.get('image'):
-            file = self.request.FILES['image']
-            key = f"media/{uuid.uuid4()}-{file.name}"
-            upload_fileobj_to_s3(file, key, content_type=file.content_type)
-            self.object.image_url = public_url(key)     # خزّن الرابط بدلاً من ImageField
-        self.object.save()
-        return super().form_valid(form)
+
+    # def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    #     self.object = form.save(commit=False)
+    #     if self.request.FILES.get('image'):
+    #         file = self.request.FILES['image']
+    #         key = f"media/{uuid.uuid4()}-{file.name}"
+    #         upload_fileobj_to_s3(file, key, content_type=file.content_type)
+    #         self.object.image_url = public_url(key)
+    #     self.object.save()
+    #     return super().form_valid(form)
 
 
     def get_success_url(self):
