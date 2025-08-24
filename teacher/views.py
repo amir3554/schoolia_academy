@@ -139,34 +139,38 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         
         return is_supervisor
     
-    
-    def form_valid(self, form):
-            # لا تحفظ الملف عبر Django
-            self.object = form.save(commit=False)
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        self.object = form.save()
+        return super().form_valid(form)
 
-            f = self.request.FILES.get("image")
-            if f:
-                # تأكد أن الستريم مفتوح وبدايته عند 0
-                try:
-                    f.open()
-                except Exception:
-                    pass
-                try:
-                    f.seek(0)
-                except Exception:
-                    pass
 
-                key = f"media/courses/{uuid.uuid4()}-{f.name}"
-                upload_fileobj_to_s3(f, key, content_type=f.content_type)
-                self.object.image_url = public_url(key)  # خزّن رابط S3 فقط
+    # def form_valid(self, form):
+    #         # لا تحفظ الملف عبر Django
+    #         self.object = form.save(commit=False)
 
-                # مهم: امنع Django من محاولة حفظ الملف مرة أخرى
-                form.cleaned_data["image"] = None
-                if "image" in form.files:
-                    del form.files["image"]
+    #         f = self.request.FILES.get("image")
+    #         if f:
+    #             # تأكد أن الستريم مفتوح وبدايته عند 0
+    #             try:
+    #                 f.open()
+    #             except Exception:
+    #                 pass
+    #             try:
+    #                 f.seek(0)
+    #             except Exception:
+    #                 pass
 
-            self.object.save()
-            return HttpResponseRedirect(self.get_success_url())
+    #             key = f"media/courses/{uuid.uuid4()}-{f.name}"
+    #             upload_fileobj_to_s3(f, key, content_type=f.content_type)
+    #             self.object.image_url = public_url(key)  # خزّن رابط S3 فقط
+
+    #             # مهم: امنع Django من محاولة حفظ الملف مرة أخرى
+    #             form.cleaned_data["image"] = None
+    #             if "image" in form.files:
+    #                 del form.files["image"]
+
+    #         self.object.save()
+    #         return HttpResponseRedirect(self.get_success_url())
 
     
 

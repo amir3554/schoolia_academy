@@ -24,6 +24,7 @@ class CourseModelForm(forms.ModelForm):
             'name' : forms.TextInput(attrs=attrs),
             'description' : forms.Textarea(attrs=attrs),
             'price' : forms.NumberInput(attrs=attrs),
+            'image' : forms.FileInput(attrs=attrs)
         }
 
 
@@ -45,7 +46,6 @@ class UnitModelForm(forms.ModelForm):
             'name' : forms.TextInput(attrs=attrs),
             'description' : forms.Textarea(attrs=attrs),
             'course' : forms.Select(attrs=attrs),
-            'image' : forms.FileInput(attrs=attrs),
         }
 
 
