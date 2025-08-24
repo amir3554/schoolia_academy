@@ -259,24 +259,43 @@ class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
         self.object = form.save(commit=False)
 
-        f = self.request.FILES.get("image")
-        if f:
+        image = self.request.FILES.get("image")
+        if image:
             try:
-                f.open()
+                image.open()
             except Exception:
                 pass
             try:
-                f.seek(0)
+                image.seek(0)
             except Exception:
                 pass
 
-            key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{f.name}"
-            upload_fileobj_to_s3(f, key, content_type=f.content_type)
+            key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{image.name}"
+            upload_fileobj_to_s3(image, key, content_type=image.content_type)
             self.object.image = public_url(key) 
 
             form.cleaned_data["image"] = None
             if "image" in form.files:
                 del form.files["image"]
+
+        video = self.request.FILES.get("video")
+        if video:
+            try:
+                video.open()
+            except Exception:
+                pass
+            try:
+                video.seek(0)
+            except Exception:
+                pass
+
+            key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{video.name}"
+            upload_fileobj_to_s3(video, key, content_type=video.content_type)
+            self.object.video = public_url(key) 
+
+            form.cleaned_data["video"] = None
+            if "video" in form.files:
+                del form.files["video"]
 
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
@@ -423,29 +442,48 @@ class LessonUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
 
-            self.object = form.save(commit=False)
+        self.object = form.save(commit=False)
 
-            f = self.request.FILES.get("image")
-            if f:
-                try:
-                    f.open()
-                except Exception:
-                    pass
-                try:
-                    f.seek(0)
-                except Exception:
-                    pass
+        image = self.request.FILES.get("image")
+        if image:
+            try:
+                image.open()
+            except Exception:
+                pass
+            try:
+                image.seek(0)
+            except Exception:
+                pass
 
-                key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{f.name}"
-                upload_fileobj_to_s3(f, key, content_type=f.content_type)
-                self.object.image = public_url(key) 
+            key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{image.name}"
+            upload_fileobj_to_s3(image, key, content_type=image.content_type)
+            self.object.image = public_url(key) 
 
-                form.cleaned_data["image"] = None
-                if "image" in form.files:
-                    del form.files["image"]
+            form.cleaned_data["image"] = None
+            if "image" in form.files:
+                del form.files["image"]
 
-            self.object.save()
-            return HttpResponseRedirect(self.get_success_url())
+        video = self.request.FILES.get("video")
+        if video:
+            try:
+                video.open()
+            except Exception:
+                pass
+            try:
+                video.seek(0)
+            except Exception:
+                pass
+
+            key = f"media/courses/{random.randint(1, 1000)}-{random.randint(1, 1000)}-{video.name}"
+            upload_fileobj_to_s3(video, key, content_type=video.content_type)
+            self.object.video = public_url(key) 
+
+            form.cleaned_data["video"] = None
+            if "video" in form.files:
+                del form.files["video"]
+
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
     def get_success_url(self):

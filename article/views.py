@@ -4,7 +4,8 @@ from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator
 from school.models import  Comment
 from .models import Article
-
+import random
+from utils.s3 import upload_fileobj_to_s3, public_url
 
 @login_required
 def article_detail(request, article_id):
@@ -20,34 +21,117 @@ def article_detail(request, article_id):
         'comments': comments
     })
 
+
+
+
 @login_required
 def article_create(request):
     if request.method == 'POST':
         try:
+            title = request.POST.get('title')
+            content = request.POST.get('content')
+            f = request.FILES.get("image")
+
+            image_url = None
+            if f:
+                try:
+                    f.open()
+                except Exception:
+                    pass
+
+                try:
+                    f.seek(0)
+                except Exception:
+                    pass
+
+                # توليد اسم عشوائي للملف
+                key = f"media/courses/{random.randint(1,1000)}-{random.randint(1,1000)}-{f.name}"
+                
+                # رفع الملف على S3
+                upload_fileobj_to_s3(f, key, content_type=f.content_type)
+
+                # الحصول على الرابط العمومي
+                image_url = public_url(key)
+
+            # إنشاء المقال وربط الصورة كرابط
             a = Article.objects.create(
-                title=request.POST['title'],
-                content=request.POST['content'],
-                image=request.FILES.get('image'),
+                title=title,
+                content=content,
+                image=image_url,   # لاحظ هنا نمرر الرابط بدل ملف
                 student=request.user
             )
+
             return redirect('Article', a.pk)
-        except:
+        except Exception as e:
+            print(e)
             return render(request, 'article_form.html', {'article': None})
-        
+
     return render(request, 'article_form.html', {'article': None})
+
+
 
 
 @login_required
 def article_update(request, article_id):
     article = get_object_or_404(Article, pk=article_id, student=request.user)
+
     if request.method == 'POST':
+        # حدّث الحقول النصية
         article.title = request.POST.get('title') or article.title
         article.content = request.POST.get('content') or article.content
-        if request.FILES.get('image'):
-            article.image = request.FILES['image']
+
+        # إن وُجد ملف جديد ارفعه إلى S3 واحفظ رابطَه
+        f = request.FILES.get('image')
+        if f:
+            try:
+                f.open()
+            except Exception:
+                pass
+            try:
+                f.seek(0)
+            except Exception:
+                pass
+
+            key = f"media/courses/{random.randint(1,1000)}-{random.randint(1,1000)}-{f.name}"
+            upload_fileobj_to_s3(f, key, content_type=getattr(f, "content_type", None))
+            article.image = public_url(key)   # نخزن URL الناتج #type:ignore
+
         article.save()
         return redirect('Article', article.pk)
+
     return render(request, 'article_form.html', {'article': article})
+
+
+
+
+# @login_required
+# def article_create(request):
+#     if request.method == 'POST':
+#         try:
+#             a = Article.objects.create(
+#                 title=request.POST['title'],
+#                 content=request.POST['content'],
+#                 image=request.FILES.get('image'),
+#                 student=request.user
+#             )
+#             return redirect('Article', a.pk)
+#         except:
+#             return render(request, 'article_form.html', {'article': None})
+        
+#     return render(request, 'article_form.html', {'article': None})
+
+
+# @login_required
+# def article_update(request, article_id):
+#     article = get_object_or_404(Article, pk=article_id, student=request.user)
+#     if request.method == 'POST':
+#         article.title = request.POST.get('title') or article.title
+#         article.content = request.POST.get('content') or article.content
+#         if request.FILES.get('image'):
+#             article.image = request.FILES['image']
+#         article.save()
+#         return redirect('Article', article.pk)
+#     return render(request, 'article_form.html', {'article': article})
 
 
 def articles_list(request):
