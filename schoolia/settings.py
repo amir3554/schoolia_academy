@@ -61,8 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-MIDDLEWARE += [
     'school.middleware.CourseAccessMiddleware',
     'school.middleware.ManagerAccessMiddleware',
 ]
@@ -92,26 +90,22 @@ TEMPLATES[0]['OPTIONS']['context_processors'] += [
 WSGI_APPLICATION = 'schoolia.wsgi.application'
 
 
-# Database
 
+
+# Database
 
 import os
 import dj_database_url
 
 DATABASES = {
     "default": dj_database_url.config(
-        env="JAWSDB_MARIA_URL",          # هذا المتغير يضعه إضافة JawsDB Maria
+        env="JAWSDB_MARIA_URL",
         conn_max_age=600,
     )
 }
 DATABASES["default"]["OPTIONS"] = {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
 
 
-
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -154,6 +148,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -208,29 +205,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 
 
-from storages.backends.s3boto3 import S3Boto3Storage
-
-class MediaRootS3Boto3Storage(S3Boto3Storage):
-    location = "media"
-    default_acl = "public-read"
-
-
-DEFAULT_FILE_STORAGE = "schoolia.settings.MediaRootS3Boto3Storage"
-#MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-#MEDIA_URL = f'https://{os.environ.get("BUCKET", 'schooliabucket')}.s3.amazonaws.com/'#'/media/'
-
-
-
-
 USE_S3 = bool(True)#os.getenv("USE_S3") == "1"
-
-#INSTALLED_APPS += ["storages"]
-
-
-
 
 if USE_S3:
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "schooliabucket")
@@ -239,13 +214,17 @@ if USE_S3:
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 
-
     AWS_QUERYSTRING_AUTH = False
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = None 
 
-    # استخدم S3 للميديا فقط (الصور/الملفات المرفوعة)
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    from storages.backends.s3boto3 import S3Boto3Storage
+
+    class MediaRootS3Boto3Storage(S3Boto3Storage):
+        location = "media"
+        default_acl = "public-read"
+
+    DEFAULT_FILE_STORAGE = "path.to.MediaRootS3Boto3Storage"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 else:
     # تخزين محلي (للتطوير)
