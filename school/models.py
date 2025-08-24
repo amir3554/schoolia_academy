@@ -10,7 +10,7 @@ from authentication.models import Student
 class Course(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    image = models.FileField(null=True, blank=True, upload_to='media/courses/')
+    image = models.FileField(max_length=1000, null=True, blank=True, upload_to='media/courses/')
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,8 +32,8 @@ class Unit(models.Model):
 class Lesson(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField(null=True, blank=True)
-    image = models.FileField(null=True, blank=True, upload_to='media/lessons/')
-    video = models.FileField(null=True, blank=True, upload_to='media/lessons/')
+    image = models.FileField(max_length=1000, null=True, blank=True, upload_to='media/lessons/')
+    video = models.FileField(max_length=1000, null=True, blank=True, upload_to='media/lessons/')
     youtube_id = models.CharField(max_length=256, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
