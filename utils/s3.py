@@ -16,7 +16,8 @@ def upload_fileobj_to_s3(file_obj, key, content_type=None):
     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
     )
     extra = {"ContentType": content_type} if content_type else {}
-
+    extra['ACL'] = 'public-read'
+    
     if hasattr(file_obj, "seek"):
         try:
             file_obj.seek(0)
