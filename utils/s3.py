@@ -18,7 +18,6 @@ def upload_fileobj_to_s3(file_obj, key, content_type=None):
     extra = {}
     if content_type:
         extra["ContentType"] = content_type
-        extra['ACL'] = 'public-read'
     # لا ترسل ACL إذا كان البكت مفعّل فيه Bucket owner enforced (الافتراضي اليوم)
     try:
         s3_clent.upload_fileobj(file_obj, BUCKET, key, ExtraArgs=extra)
