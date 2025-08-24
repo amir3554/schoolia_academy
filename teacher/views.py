@@ -142,10 +142,11 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         self.object = form.save(commit=False)
-        file = self.request.FILES['image']
-        key = f"media/{uuid.uuid4()}-{file.name}"
-        upload_fileobj_to_s3(file, key, content_type=file.content_type)
-        self.object.image_url = public_url(key)     # خزّن الرابط بدلاً من ImageField
+        if self.request.FILES.get('image'):
+            file = self.request.FILES['image']
+            key = f"media/{uuid.uuid4()}-{file.name}"
+            upload_fileobj_to_s3(file, key, content_type=file.content_type)
+            self.object.image_url = public_url(key)     # خزّن الرابط بدلاً من ImageField
         self.object.save()
         return super().form_valid(form)
 
